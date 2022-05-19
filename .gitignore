@@ -1,0 +1,11 @@
+# Ignore CMakeLists.txt files
+CMakeLists.txt
+
+# Ignore cmake-build repo
+cmake-build*
+
+# Ignore a.out
+a.out
+
+# Ignore .o files
+*.o
