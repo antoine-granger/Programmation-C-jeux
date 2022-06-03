@@ -5,7 +5,7 @@
 #include"snake.h"
 
 float compute_size(int h, int w){
-    if(h <= w){
+    if(h >= w){
         return h/NBL;
     }
     return w/NBC;
@@ -49,20 +49,50 @@ void draw_grid(char grille[][NBC+1]){
 }
 
 
-void move_snake(char grille[][NBC+1], Snake *snake){
+int get_grid(char grid[][NBC+1], const char file_name[]){
+    int i, j, nb_fruit;
+    FILE* grid_file;
+    char chara_in_file;
+    grid_file = fopen(file_name, "r");
+    i = 0;
+    j = 0;
+    nb_fruit = 0;
+    if (grid_file != NULL) {
+        while ((chara_in_file = fgetc(grid_file)) != EOF) {
+            if(i == NBC+1){
+                j = j + 1;
+                i = 0;
+            }
+            if(j == NBL){
+                break;
+            }
+            grid[j][i] = chara_in_file;
+            if(chara_in_file == 'f'){
+                nb_fruit = nb_fruit + 1;
+            }
+            i = i + 1;
+        }
+        fclose(grid_file);
+    }
+    return nb_fruit;
+}
+
+
+enum Element move_snake(char grid[][NBC+1], Snake *snake){
     int x, y;
+    enum Element element;
     /* efface la queue du serpent */
     x = snake->snake_body.snake_part[SNAKE_SIZE-1].x;
     y = snake->snake_body.snake_part[SNAKE_SIZE-1].y;
-    grille[y][x] = EMPTY;
+    grid[y][x] = EMPTY;
     /* deplace le serpent */
     crawl(snake);
     /* indique sur la grille la tête du serpent*/
     x = snake->snake_body.snake_part[0].x;
     y = snake->snake_body.snake_part[0].y;
-    printf("\nposition x de la tête du serpent : %d", x);
-    printf("\nposition y de la tête du serpent : %d", y);
-    grille[y][x] = SNAKE;
+    element = grid[y][x];
+    grid[y][x] = SNAKE;
+    return element;
 }
 
 
@@ -72,6 +102,5 @@ void place_snake(char grille[][NBC+1], Snake *snake){
         x = snake->snake_body.snake_part[part_snake].x;
         y = snake->snake_body.snake_part[part_snake].y;
         grille[y][x] = SNAKE;
-        printf("\n(x = %d y = %d)",x,y);
     }
 }
