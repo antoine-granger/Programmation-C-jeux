@@ -72,6 +72,7 @@ int get_grid(Grid *struct_grid, const char file_name[]){
             }
             i = i + 1;
         }
+        fprintf(stderr, "\noui\n");
         fclose(grid_file);
     }
     return nb_fruit;
