@@ -86,12 +86,15 @@ int main(int argc, char* argv[]){
     }
     /* //// CODE PRINCIPAL //// */
     /* Ouverture de la fenêtre graphique */
+    struct_grid = allocate_grid(NBC, NBL);
+    fprintf(stderr, "\noui\n");
     if(argc > 1){
         nb_fruit = get_grid(struct_grid, input_filename);
     }
     else{
         nb_fruit = get_grid(struct_grid, "01_grid.txt");
     }
+    fprintf(stderr, "\noui\n");
     place_snake(struct_grid, &snake);
     MLV_create_window( "SNAKE", "3R-IN1B", width, height );
     MLV_change_frame_rate( 24);
