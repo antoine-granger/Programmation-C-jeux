@@ -1,6 +1,6 @@
 #include"grid.h"
 #include "snake.h"
-#include<stdio.h>
+
 #include <MLV/MLV_all.h>
 
 

@@ -46,7 +46,7 @@ char *concat(char *tab1, char *tab2){
 
 int **alloue(int colonne, int ligne){
     int i;
-    int ** tab_int = (int **) malloc(sizeof(int)*colonne);
+    int **tab_int = (int **) malloc(sizeof(int)*colonne);
     for(i = 0; i < colonne; i++){
         tab_int[i] = (int *) malloc(sizeof(int)*ligne);
     }
