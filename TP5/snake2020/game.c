@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <MLV/MLV_all.h>
-
+#include <unistd.h>
 #include"grid.h"
 #include"snake.h"
+#include<string.h>
 
 #define DIFFICULTY 6
 
@@ -22,7 +23,7 @@ void print_usage(FILE* stream, int exit_code){
 
 
 int main(int argc, char* argv[]){
-    Snake snake = {{{{1,3},{1,2},{1,1},{1,0}},LEFT}};
+    Snake snake = {{{{2,1},{2,2},{1,2},{1,1}},RIGHT}};
     enum Element element;
     Grid *struct_grid;
     MLV_Keyboard_button touche = MLV_KEYBOARD_NONE;
@@ -86,27 +87,30 @@ int main(int argc, char* argv[]){
     }
     /* //// CODE PRINCIPAL //// */
     /* Ouverture de la fenêtre graphique */
-    struct_grid = allocate_grid(NBC, NBL);
-    fprintf(stderr, "\noui\n");
-    if(argc > 1){
-        nb_fruit = get_grid(struct_grid, input_filename);
+    if(argc == 1) {
+        input_filename = "levels/default_grid.txt";
     }
-    else{
-        nb_fruit = get_grid(struct_grid, "01_grid.txt");
-    }
-    fprintf(stderr, "\noui\n");
+    struct_grid = allocate_grid(input_filename);
+    nb_fruit = get_grid(struct_grid, input_filename);
     place_snake(struct_grid, &snake);
     MLV_create_window( "SNAKE", "3R-IN1B", width, height );
     MLV_change_frame_rate( 24);
     /* Ferme la fenêtre quand la touche ESC est enfoncé */
     nb_move = DIFFICULTY;
-    while((MLV_get_event(&touche, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) == MLV_NONE || touche != MLV_KEYBOARD_ESCAPE) && (nb_fruit > 0)) {
+    while(MLV_get_event(&touche, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) == MLV_NONE || touche != MLV_KEYBOARD_ESCAPE) {
         MLV_clear_window(MLV_COLOR_BROWN);
         if(nb_move%DIFFICULTY == 0) {
             nb_move = 0;
             element = move_snake(struct_grid, &snake);
             if (element == FRUIT) {
                 nb_fruit = nb_fruit - 1;
+                if (nb_fruit == 0){
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    MLV_draw_text(height/3, width/3, "Vous avez réussi a manger tous les fruits, victoire !", MLV_COLOR_RED);
+                    MLV_actualise_window();
+                    sleep(5);
+                    break;
+                }
             }
             else if (element == WALL || element == SNAKE) {
                 break;
@@ -139,5 +143,6 @@ int main(int argc, char* argv[]){
         nb_move = nb_move + 1;
     }
     MLV_free_window();
+    free_grid(struct_grid);
     return 0;
 }
