@@ -10,8 +10,6 @@ all: $(EXEC)
 game: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-game.o: grid.h snake.h
-
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
