@@ -139,7 +139,7 @@ int main(int argc, char* argv[]){
                 /* End the game and display a message on the window */
                 if (nb_fruit == 0){
                     MLV_clear_window(MLV_COLOR_BLACK);
-                    MLV_draw_text(height/3, width/3, "Vous avez réussi a manger tous les fruits, victoire !", MLV_COLOR_RED);
+                    MLV_draw_text(height/3, width/3, "Good job you ate all the fruit !", MLV_COLOR_RED);
                     MLV_actualise_window();
                     sleep(5);
                     break;
