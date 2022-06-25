@@ -5,9 +5,9 @@ The MLV library is a simplified multimedia library. This library has been design
 * display images,
 * play sounds and musics,
 * catch mouse and keyboard events,
-* get informations from dialog boxes.
+* get information from dialog boxes.
 
-These tools are simplified interfaces of the SDL library. If you are not a C beginner, better use the SDL librairy (SDL, SDL_gfx, SDL_sound, SDL_ttf).
+These tools are simplified interfaces of the SDL library. If you are not a C beginner, better use the SDL library (SDL, SDL_gfx, SDL_sound, SDL_ttf).
 
 The MLV library is portable, and can be compiled and executed on GNU/Linux, Macintosh and Windows.
 
@@ -33,7 +33,42 @@ The MLV library is portable, and can be compiled and executed on GNU/Linux, Maci
     Try a gcc 01_hello_world.c. Does it work? What error do you get?
 
     Try gcc -c 01_hello_world.c. Normally you should get a file 01_hello_world.o. So it is the link editing and not the compilation that is the problem.
-
+    
     Try gcc 01_hello_world.o -lMLV. This should work and you should get an executable file a.out. Test it, it should display a graphical window with the text hello world. Be careful the option to add is -lMLV and not -IMLV. Moreover this option must be at the end of the command line.
 
-# 
+# Contenu de l'archive 
+
+![img.png](doc/img.png)
+
+The archive consists of a **Makefile** which will be used to compile the program, the **README.md** which you are reading and
+4 directories :
+* **BIN :** Contains the .o and the executable ***snake*** after compilation with the Makefile
+* **DOC :** Contains the ***user.pdf*** and ***dev.pdf*** documents
+* **LEVELS :** Contains the different playable levels of the game
+* **SRC :** Contains the source files of the program : ***game.c*** / ***grid.c*** / ***snake.c*** / ***grid.h*** / ***snake.h***
+
+# The compilation procedure
+
+The Makefile is a set of command :
+
+* **'make snake' :** which allows to get an executable to play the game
+* **'make clean' :** which deletes all temporary compilation files (.o) but not the executable
+* **'make clear' :** which deletes all files in the bin/ directory
+* **'make tgz' :** which generates the archive in tgz format that you must return
+
+You have to be in your linux terminal and in the snake2020 repository and enter the command to get the executable of the game :
+```bash
+make snake clean
+```
+
+# Program launch
+
+To launch the game with the default level you have to be in your snake repository and enter the following command :
+```bash
+./bin/snake
+```
+if you want to change the levels you have to enter the following command : 
+```bash
+./bin/snake --input levels/<name of your levels>
+```
+and there is 2 levels : ***01_grid.txt*** and ***02_grid.txt***
